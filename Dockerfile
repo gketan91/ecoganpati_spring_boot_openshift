@@ -1,5 +1,5 @@
 # Multi-stage build for lightweight Spring Boot application
-FROM maven:3.9-openjdk-17-slim AS build
+FROM maven:3.8-openjdk-17-slim AS build
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage with minimal JRE
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-jammy
 
 # Create non-root user for security
 RUN groupadd -r spring && useradd -r -g spring spring

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: ecoganpati-store
-        image: ecoganpati-store:latest
+        image: gketan91/ecoganpati_spring_boot_openshift
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -61,14 +61,12 @@ spec:
             drop:
             - ALL
         volumeMounts:
-        - name: tmp-volume
-          mountPath: /tmp
+          - mountPath: /app/data         # path inside your container
+            name: ecoganpati-storage
       volumes:
-      - name: tmp-volume
-        emptyDir: {}
-      securityContext:
-        fsGroup: 1000
-      restartPolicy: Always
+        - name: ecoganpati-storage
+          persistentVolumeClaim:
+            claimName: ecoganpati-pvc
 ---
 apiVersion: v1
 kind: ConfigMap
