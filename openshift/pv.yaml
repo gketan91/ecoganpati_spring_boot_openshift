@@ -4,10 +4,10 @@ metadata:
   name: ecoganpati-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   storageClassName: ecoganpati-sc
   persistentVolumeReclaimPolicy: Retain
   hostPath:                     # for local testing only, do not use in production
-    path: /mnt/data/ecoganpati
+    path: /

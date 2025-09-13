@@ -6,7 +6,7 @@ metadata:
     app: ecoganpati-store
     version: v1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ecoganpati-store
@@ -53,20 +53,22 @@ spec:
           timeoutSeconds: 3
           failureThreshold: 3
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 1000
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
           capabilities:
             drop:
             - ALL
         volumeMounts:
-          - mountPath: /app/data         # path inside your container
+          - mountPath: /app/data
             name: ecoganpati-storage
+          - mountPath: /tmp
+            name: tmp-storage
       volumes:
         - name: ecoganpati-storage
           persistentVolumeClaim:
             claimName: ecoganpati-pvc
+        - name: tmp-storage
+          emptyDir: { }
 ---
 apiVersion: v1
 kind: ConfigMap

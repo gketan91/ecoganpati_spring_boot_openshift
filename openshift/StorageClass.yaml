@@ -1,10 +1,9 @@
-apiVersion: storage.k8s.io/v1
 kind: StorageClass
+apiVersion: storage.k8s.io/v1
 metadata:
   name: ecoganpati-sc
-provisioner: kubernetes.io/aws-ebs # change according to your cloud (eg: aws-ebs, gce-pd, openshift.io/aws-ebs, or local)
+provisioner: kubevirt.io.hostpath-provisioner
 parameters:
-  type: gp2                      # example for AWS EBS gp2 volume
-  fsType: ext4
+  storagePool: local
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
