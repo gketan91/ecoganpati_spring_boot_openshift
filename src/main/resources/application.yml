@@ -1,0 +1,35 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    max-threads: 50
+    accept-count: 10
+
+spring:
+  application:
+    name: ecoganpati-store
+  thymeleaf:
+    cache: false
+    mode: HTML
+  web:
+    resources:
+      cache:
+        period: 3600
+  main:
+    banner-mode: console
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.ecoganpati: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"

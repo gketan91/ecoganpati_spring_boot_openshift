@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ecoganpati-store-route
+  labels:
+    app: ecoganpati-store
+spec:
+  to:
+    kind: Service
+    name: ecoganpati-store-service
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

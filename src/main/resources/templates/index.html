@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoGanpati - Premium Sustainable Divine Idols</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1 class="logo-text">🌱 EcoGanpati</h1>
+                    <span class="tagline">Artisan Crafted • Eco Conscious • Divinely Beautiful</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home">Home</a>
+                    <a href="#collection">Collection</a>
+                    <a href="#craftsmanship">Craftsmanship</a>
+                    <a href="#about">About</a>
+                    <button class="cart-btn" id="cart-button">
+                        <span class="cart-icon">🛒</span> Cart (<span id="cart-count">0</span>)
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Handcrafted Divine Artistry<br>Meets Environmental Consciousness</h2>
+                <p class="hero-description">Exquisite Ganpati idols masterfully sculpted from natural grass fibers and sustainable materials. Where tradition honors nature and divinity blesses our planet.</p>
+                <button class="btn btn--primary btn--lg hero-cta" id="explore-collection-btn">Explore Collection</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="collection">
+        <div class="container">
+            <h2 class="section-title">Our Sacred Collection</h2>
+            <div class="products-grid">
+                <div class="product-card" th:each="product : ${products}">
+                    <div class="product-image">
+                        <img th:src="@{'https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/' + ${product.image} + '.png'}" 
+                             th:alt="${product.name}" loading="lazy">
+                        <div class="image-overlay">
+                            <button class="btn btn--secondary quick-view-btn" th:onclick="'openQuickView(' + ${product.id} + ')'">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" th:text="${product.name}">Product Name</h3>
+                        <p class="product-description" th:text="${product.description}">Product Description</p>
+                        <div class="size-selection">
+                            <label th:for="'size-' + ${product.id}">Size:</label>
+                            <select class="size-select" th:id="'size-' + ${product.id}" th:onchange="'updatePrice(' + ${product.id} + ')'">
+                                <option th:each="size, iterStat : ${product.sizes}" 
+                                        th:value="${iterStat.index}" 
+                                        th:data-price="${size.price}"
+                                        th:text="${size.size}">Size Option</option>
+                            </select>
+                        </div>
+                        <div class="product-price">
+                            <span class="price" th:id="'price-' + ${product.id}" th:text="'₹' + ${product.sizes[0].price}">₹0</span>
+                        </div>
+                        <button class="btn btn--primary add-to-cart-btn" th:onclick="'addToCart(' + ${product.id} + ')'">
+                            Add to Collection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Artisan Crafted Excellence</h3>
+                    <p>Hand-sculpted by master artisans using traditional techniques</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌿</div>
+                    <h3>100% Biodegradable Materials</h3>
+                    <p>Natural grass fibers and lime composition that dissolves harmlessly</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Sustainable Manufacturing</h3>
+                    <p>Eco-conscious production methods that protect our environment</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <h3>Premium Packaging & Delivery</h3>
+                    <p>Careful handling and secure shipping to your doorstep</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Craftsmanship Section -->
+    <section class="craftsmanship" id="craftsmanship">
+        <div class="container">
+            <div class="craftsmanship-content">
+                <h2 class="section-title">Our Grass-Based Innovation</h2>
+                <p class="craftsmanship-description">
+                    Our revolutionary process transforms natural grass fibers into durable, beautiful plaster through 
+                    alkali extraction of cellulose, combined with lime and clay binders. This creates sculptures 
+                    that rival traditional plaster of Paris while remaining completely biodegradable.
+                </p>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Grass Harvesting</h4>
+                        <p>Fresh grass is collected and processed to extract pure cellulose fibers</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Natural Binding</h4>
+                        <p>Cellulose is combined with lime and clay to create our proprietary eco-plaster</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Master Crafting</h4>
+                        <p>Skilled artisans hand-sculpt each idol with precision and devotion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">About EcoGanpati</h2>
+                <p>
+                    We are passionate artisans committed to preserving both tradition and nature. Our innovative 
+                    grass-based plaster technology allows us to create stunning Ganpati idols that honor 
+                    Lord Ganesha while protecting our environment for future generations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Collection</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be populated by JavaScript -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <strong>Total: ₹<span id="cart-total">0</span></strong>
+            </div>
+            <button class="btn btn--primary btn--full" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 EcoGanpati. Crafted with love for nature and tradition.</p>
+                <div class="social-links">
+                    <span>Follow us: </span>
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📷 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

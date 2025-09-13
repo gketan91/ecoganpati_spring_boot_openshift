@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecoganpati-store-service
+  labels:
+    app: ecoganpati-store
+spec:
+  selector:
+    app: ecoganpati-store
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP
+  sessionAffinity: None
